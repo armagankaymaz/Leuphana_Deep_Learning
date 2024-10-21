@@ -7,6 +7,36 @@ import matplotlib.pylab as plt
 import sklearn.datasets
 import torchvision.datasets
 
+class ReLU:
+    def evaluate(self, z):
+        return z.clip(min=0)
+    def gradient(self, z):
+        tmp = np.zeros_like(z)
+        tmp[z>0] = 1.0
+        return tmp
+
+class sigmoid:
+    @staticmethod
+    def evaluate(z):
+        return 1/(1+np.exp(-z))
+    @staticmethod
+    def gradient(z):
+        tmp = self.evaluate(z)
+        return tmp*(1-tmp)
+    
+"""
+# The NeuralNetwork class is supposed to work as follows.
+# We can define a network, i.e., with 2 input, 3 hidden, and 2 output neurons as
+net = NeuralNetwork([2,3,2])
+# A forward pass (prediction) can be computed using
+net.forward(x)
+# and the gradients of all parameters can be obtained via
+net.backprop(x, y)
+# Finally, the network can be trained by calling
+net.train(x, y)
+# Other activation functions can be provided when creating the object:
+net = NeuralNetwork([2,3,2], activations=[ReLU(), ReLU(), sigmoid()])
+"""
 
 #
 # Task 5 (as a program)
@@ -38,36 +68,6 @@ x2 = sigmoid.evaluate(s2)
 # Part 1 
 # (i)
 
-class ReLU:
-    def evaluate(self, z):
-        return z.clip(min=0)
-    def gradient(self, z):
-        tmp = np.zeros_like(z)
-        tmp[z>0] = 1.0
-        return tmp
-
-class sigmoid:
-    @staticmethod
-    def evaluate(z):
-        return 1/(1+np.exp(-z))
-    @staticmethod
-    def gradient(z):
-        tmp = self.evaluate(z)
-        return tmp*(1-tmp)
-    
-"""
-# The NeuralNetwork class is supposed to work as follows.
-# We can define a network, i.e., with 2 input, 3 hidden, and 2 output neurons as
-net = NeuralNetwork([2,3,2])
-# A forward pass (prediction) can be computed using
-net.forward(x)
-# and the gradients of all parameters can be obtained via
-net.backprop(x, y)
-# Finally, the network can be trained by calling
-net.train(x, y)
-# Other activation functions can be provided when creating the object:
-net = NeuralNetwork([2,3,2], activations=[ReLU(), ReLU(), sigmoid()])
-"""
 
 # Task 6
 # Part 1 
